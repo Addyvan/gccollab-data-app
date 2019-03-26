@@ -7,7 +7,7 @@
 """
 
 # IMPORTS
-
+import json
 # For querying the analytics API
 from apiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
@@ -46,13 +46,29 @@ class gcga:
         # If the API key has not yet been turned into a file, do that now
         credentials = {}
         if os.path.isfile('client_secrets.json') == False:
-            # Create the file from the env
-            with open('client_secrets.json', 'w') as f:
-                f.write(os.environ['GA-CLIENT-SECRETS'])
-        
-        """ Initialize the Analytics API object """
-        credentials = ServiceAccountCredentials.from_json_keyfile_name(
-          gcga._KEY_FILE_LOCATION, gcga._SCOPES)
+            
+            creds = {
+                "type": os.environ['GA_TYPE'],
+                "project_id": os.environ['GA_PROJECT_ID'],
+                "private_key_id": os.environ['GA_PRIVATE_KEY_ID'],
+                "private_key": os.environ['GA_PRIVATE_KEY'],
+                "client_email": os.environ['GA_CLIENT_EMAIL'],
+                "client_id": os.environ['GA_CLIENT_ID'],
+                "auth_uri": os.environ['GA_AUTH_URI'],
+                "token_uri": os.environ['GA_TOKEN_URI'],
+                "auth_provider_x509_cert_url": os.environ['GA_AUTH_PROVIDER_X509_CER_URL'],
+                "client_x509_cert_url": os.environ['GA_CLIENT_X509_CERT_URl']
+            }
+
+            with open('client_secrets.json', 'w') as fp:
+                json.dump(creds, fp)
+
+            credentials = ServiceAccountCredentials.from_json_keyfile_name(
+            gcga._KEY_FILE_LOCATION, gcga._SCOPES)
+        else:
+            """ Initialize the Analytics API object """
+            credentials = ServiceAccountCredentials.from_json_keyfile_name(
+            gcga._KEY_FILE_LOCATION, gcga._SCOPES)
         
         ServiceAccountCredentials.from_json
         # Build the service object.
