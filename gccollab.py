@@ -72,10 +72,10 @@ def connect_to_database():
         # If running from within a kubernetes environment, use an env variable
         config = {
             'host':os.environ['COLLAB_DB_HOST'],
-            'user':creds['COLLAB_DB_USERNAME'],
-            'password':creds['COLLAB_DB_PASSWORD'],
-            'database':creds['COLLAB_DB_NAME'],
-            'port':creds['COLLAB_DB_PORT']
+            'user':os.environ['COLLAB_DB_USERNAME'],
+            'password':os.environ['COLLAB_DB_PASSWORD'],
+            'database':os.environ['COLLAB_DB_NAME'],
+            'port':os.environ['COLLAB_DB_PORT']
         }
 
     try:

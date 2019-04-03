@@ -37,4 +37,4 @@ ADD . /app
 EXPOSE 3000
 
 # Start the app
-cmd ["./start.sh"]
+CMD ["forever", "-c",  "node", "app.js"]
