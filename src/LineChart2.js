@@ -483,7 +483,7 @@ class LineChart2 extends Component {
             }
         }
         catch(err){
-            console.log("Nope")
+            console.log(err)
         }
         console.log(this.state.data)
         return (
